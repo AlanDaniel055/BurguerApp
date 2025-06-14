@@ -1,0 +1,7 @@
+{
+  "name": "hamburguesasApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
