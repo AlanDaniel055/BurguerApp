@@ -1,0 +1,160 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title mode="md">
+      <span>Inicio</span>      
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row class="borderBotton">
+    <div>
+      <swiper-container
+        [modules]="swiperModules"
+        [slidesPerView]="1.2"
+        [spaceBetween]="20"
+        [keyboard]="true"
+        [pagination]="{clickable: true, dynamicBullets: true}">
+        <swiper-slide>
+          <img src="assets/img/1.jpg" alt="Imagen"/>
+        </swiper-slide>
+        <swiper-slide>
+          <img src="assets/img/2.jpg" />
+        </swiper-slide>
+        <swiper-slide>
+          <img src="assets/img/1.jpg" />
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </ion-row>
+
+  <ion-list>
+    <ion-list-header class="ion-margin-bottom">
+      <ion-label>
+        <h4 class="TituloInicio">Recomendados</h4>
+      </ion-label>
+    </ion-list-header>
+
+    <!-- Producto 1 -->
+    <ion-item lines="none" button (click)="verDetalleProducto({
+      nombre: 'King Mix',
+      descripcion: 'Combina y mezcla a tu manera: Whopper sin queso',
+      precio: 109,
+      imagen: 'assets/img/4.jpeg'
+    })">
+      <ion-thumbnail slot="start">
+        <img src="assets/img/4.jpeg" />
+      </ion-thumbnail>
+      <ion-label>
+        <h4>King Mix</h4>
+        <ion-text color="medium">
+          <p class="pStyle">Combina y mezcla a tu manera: Whopper sin queso</p>
+          <ion-text color="tertiary">
+            <span>MX $109</span>
+          </ion-text>
+        </ion-text>
+      </ion-label>
+      <ion-button fill="clear" color="danger" (click)="agregarAlCarrito('King Mix', 109); $event.stopPropagation()">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Producto 2 -->
+    <ion-item lines="none" button (click)="verDetalleProducto({
+      nombre: 'King box',
+      descripcion: 'Mucho por poco: Hamburguesa con queso o Crispy Chicken',
+      precio: 89,
+      imagen: 'assets/img/5.jpg'
+    })">
+      <ion-thumbnail slot="start">
+        <img src="assets/img/5.jpg" />
+      </ion-thumbnail>
+      <ion-label>
+        <h4>King box</h4>
+        <ion-text color="medium">
+          <p class="pStyle">Mucho por poco: Hamburguesa con queso o Crispy Chicken</p>
+          <ion-text color="tertiary">
+            <span>MX $89</span>
+          </ion-text>
+        </ion-text>
+      </ion-label>
+      <ion-button fill="clear" color="danger" (click)="agregarAlCarrito('King box', 89); $event.stopPropagation()">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Producto 3 -->
+    <ion-item lines="none" button (click)="verDetalleProducto({
+      nombre: 'Combos del rey',
+      descripcion: 'Corona tu antojo y sigue comiendo como rey',
+      precio: 99,
+      imagen: 'assets/img/6.jpg'
+    })">
+      <ion-thumbnail slot="start">
+        <img src="assets/img/6.jpg" />
+      </ion-thumbnail>
+      <ion-label>
+        <h4>Combos del rey</h4>
+        <ion-text color="medium">
+          <p class="pStyle">Corona tu antojo y sigue comiendo como rey</p>
+          <ion-text color="tertiary">
+            <span>MX $99</span>
+          </ion-text>
+        </ion-text>
+      </ion-label>
+      <ion-button fill="clear" color="danger" (click)="agregarAlCarrito('Combos del rey', 99); $event.stopPropagation()">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Producto 4 -->
+    <ion-item lines="none" button (click)="verDetalleProducto({
+      nombre: 'Combo Whopper + 6 nuggets',
+      descripcion: 'Bueno, Bonito y Barato: Elije el tradicional combo Whopper',
+      precio: 159,
+      imagen: 'assets/img/7.jpg'
+    })">
+      <ion-thumbnail slot="start">
+        <img src="assets/img/7.jpg" />
+      </ion-thumbnail>
+      <ion-label>
+        <h4>Combo Whopper + 6 nuggets</h4>
+        <ion-text color="medium">
+          <p class="pStyle">Bueno, Bonito y Barato: Elije el tradicional combo Whopper</p>
+          <ion-text color="tertiary">
+            <span>MX $159</span>
+          </ion-text>
+        </ion-text>
+      </ion-label>
+      <ion-button fill="clear" color="danger" (click)="agregarAlCarrito('Combo Whopper + 6 nuggets', 159); $event.stopPropagation()">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Producto 5 -->
+    <ion-item lines="none" button (click)="verDetalleProducto({
+      nombre: 'Combo king de pollo',
+      descripcion: 'Nuestro original king de pollo, con pollo empanizado',
+      precio: 129,
+      imagen: 'assets/img/8.jpg'
+    })">
+      <ion-thumbnail slot="start">
+        <img src="assets/img/8.jpg" />
+      </ion-thumbnail>
+      <ion-label>
+        <h4>Combo king de pollo</h4>
+        <ion-text color="medium">
+          <p class="pStyle">Nuestro original king de pollo, con pollo empanizado</p>
+          <ion-text color="tertiary">
+            <span>MX 129</span>
+          </ion-text>
+        </ion-text>
+      </ion-label>
+      <ion-button fill="clear" color="danger" (click)="agregarAlCarrito('Combo king de pollo', 129); $event.stopPropagation()">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

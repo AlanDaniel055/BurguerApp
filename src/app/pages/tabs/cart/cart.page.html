@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="tertiary">Carrito</ion-title>
+    <ion-buttons slot="start" *ngIf="urlCheck && urlCheck != 'tabs'">
+      <ion-back-button [defaultHref]="getPreviousUrl()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Carrito vacío -->
+  <ion-card *ngIf="!model?.items?.length">
+    <ion-card-header>
+      <ion-card-title>Tu carrito está vacío</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Agrega productos desde la página de inicio.
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Carrito con productos -->
+  <ng-container *ngIf="model?.items?.length">
+    <ion-list>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img [src]="model.restaurant?.cover || 'assets/img/1.jpg'" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ model.restaurant?.name }}</h2>
+          <p>{{ model.restaurant?.address }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngFor="let item of model.items; let i = index">
+        <ion-label>
+          <h3>{{ item.name }}</h3>
+          <p>$ {{ item.price }} x {{ item.quantity }}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button size="small" color="medium" (click)="quantityMinus(i)">
+            <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" color="medium" (click)="quantityPlus(i)">
+            <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
+    <!-- Instrucciones -->
+    <!--<ion-item lines="none">
+      <ion-icon name="list-outline" slot="start"></ion-icon>
+      <ion-input type="text" placeholder="¿Alguna instrucción especial?" [(ngModel)]="instruction"></ion-input>
+    </ion-item>-->
+
+    <!-- Detalles -->
+    <ion-list>
+      <ion-list-header>
+        <ion-label color="tertiary">Detalles de la cuenta</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Total de productos</ion-label>
+        <ion-text slot="end">$ {{ model.totalPrice }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>Envío</ion-label>
+        <ion-text slot="end">$ {{ model.deliveryCharge }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>Total a pagar</ion-label>
+        <ion-text slot="end"><strong>$ {{ model.grandTotal }}</strong></ion-text>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+</ion-content>
+
+<ion-footer *ngIf="model?.items?.length">
+  <ion-toolbar>
+
+    <!-- Dirección editable -->
+    <!--<ng-container *ngIf="!location?.address || editandoDireccion">
+      <ion-item>
+  <ion-input
+    type="text"
+    name="direccion"
+    [(ngModel)]="direccionTemporal"
+    placeholder="Escribe tu dirección de entrega"
+    clearInput
+    required
+    aria-label="Dirección"
+  ></ion-input>
+  <ion-button slot="end" fill="clear" (click)="guardarDireccion()">
+    <ion-icon name="checkmark-circle-outline"></ion-icon>
+  </ion-button>
+</ion-item>
+    </ng-container>-->
+
+    <!-- Dirección ya guardada -->
+    <!--<ng-container *ngIf="location?.address && !editandoDireccion">
+      <ion-item lines="none">
+        <ion-icon slot="start" name="home-outline"></ion-icon>
+        <ion-label>
+          <h5>Entregar en:</h5>
+          <ion-text color="medium"><p>{{ location.address }}</p></ion-text>
+        </ion-label>
+        <ion-button slot="end" size="small" fill="clear" (click)="editarDireccion()">Cambiar</ion-button>
+      </ion-item>
+    </ng-container>-->
+
+    <!-- Botones finales -->
+    <ion-row class="ion-padding">
+      <ion-col size="6">
+        <ion-button expand="block" fill="solid" color="danger" (click)="vaciarCarrito()">
+          Vaciar Carrito
+        </ion-button>
+   </ion-col>
+      <ion-col size="6">
+       <ion-button expand="block" fill="solid" color="success" (click)="makePayment()">
+        Pagar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  </ion-toolbar>
+</ion-footer>
+
+<!-- Resumen en modal -->
+<ion-modal *ngIf="mostrandoResumen">
+  <ion-content class="ion-padding">
+
+    <ion-toolbar color="tertiary">
+      <ion-title>Resumen del Pedido</ion-title>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="toggleResumen()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label color="medium">Productos</ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let item of model.items">
+        <ion-label>
+          {{ item.name }} (x{{ item.quantity }})
+        </ion-label>
+        <ion-text slot="end">
+          $ {{ item.quantity * item.price }}
+        </ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Envío</ion-label>
+        <ion-text slot="end">$ {{ model.deliveryCharge }}</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label><strong>Total</strong></ion-label>
+        <ion-text slot="end"><strong>$ {{ model.grandTotal }}</strong></ion-text>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label>
+          <p><strong>Dirección:</strong><br />{{ location.address }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-row class="ion-padding-top">
+      <ion-col size="12">
+        <ion-button expand="block" color="success" (click)="confirmarPago()">
+          Confirmar Pedido
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-content>
+</ion-modal>
+

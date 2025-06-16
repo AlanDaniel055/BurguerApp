@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- Barra de búsqueda -->
+    <ion-searchbar animated="true" debounce="800" #searchInput (ionChange)="onSearchChange($event)">
+</ion-searchbar>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Mostrar estado de carga mientras se filtra -->
+  <app-loading-restaurant *ngIf="isLoading"></app-loading-restaurant>
+
+  <!-- Mostrar un mensaje si no hay productos o si la búsqueda está vacía -->
+  <app-empty-screen *ngIf="!isLoading && (products?.length == 0 || query?.length == 0)" [model]="model"></app-empty-screen>
+
+  <!-- Mostrar los productos filtrados -->
+  <ion-list *ngIf="!isLoading && products.length > 0">
+    <ion-list-header>
+      <ion-label>
+        <h4>Resultados de búsqueda para "{{query}}"</h4>
+      </ion-label>
+    </ion-list-header>
+    
+    <!-- Itera sobre los productos filtrados y muestra cada uno -->
+    <ion-item *ngFor="let product of products">
+      <ion-thumbnail slot="start">
+        <img [src]="product.image" />
+      </ion-thumbnail>
+      <ion-label>
+        <h4>{{ product.name }}</h4>
+        <p>{{ product.description }}</p>
+        <ion-text color="tertiary">
+          <span>MX ${{ product.price }}</span>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+

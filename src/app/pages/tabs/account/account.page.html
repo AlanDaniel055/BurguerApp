@@ -1,0 +1,131 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title mode="md">
+      <span>Mi cuenta</span>
+      
+    </ion-title>
+    <!--<ion-buttons slot="end">
+      <ion-button fill="clear" (click)="logout()">
+        <ion-icon name="log-out-outline" color="danger"></ion-icon>
+      </ion-button>
+    </ion-buttons>-->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Spinner de carga -->
+  <div *ngIf="isLoading" class="ion-text-center alignSpinner">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
+    <!-- Perfil del usuario -->
+    <ion-card class="ion-margin-bottom">
+      <ion-card-header>
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <img src="assets/img/9.jpg" />
+          </ion-avatar>
+          <ion-label>
+            <h4>Maria Robles</h4>
+            <p>mafer&#64;gmail.com</p>
+            <p>9513214097</p>
+          </ion-label>
+          <!-- <ion-button fill="clear" slot="end" (click)="editarPerfil()">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>-->
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+
+    <!-- Dirección -->
+    <!--<ion-list>
+      <ion-item lines="inset" button detail [routerLink]="['/', 'tabs', 'address']">
+        <ion-icon name="home-outline" slot="start" color="medium"></ion-icon>
+        <ion-label>Administrar direcciones</ion-label>
+      </ion-item>
+    </ion-list>-->
+
+    <!-- Pedidos anteriores -->
+    <ion-list class="ion-margin-top">
+      <ion-list-header>
+        <ion-label class="ion-text-uppercase">Pedidos anteriores</ion-label>
+      </ion-list-header>
+
+      <ion-text class="ion-text-center" *ngIf="!orders || orders.length === 0">
+        <p>No has realizado pedidos aún.</p>
+      </ion-text>
+
+      <ng-container *ngFor="let order of orders">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ order.restaurant?.name }}</ion-card-title>
+            <ion-card-subtitle>{{ order.time }}</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <p>Total: <strong>MX ${{ order.total }}</strong></p>
+            <p>Pagado con: {{ order.paid }}</p>
+            <ion-button size="small" fill="outline" color="primary" (click)="reorder(order)">
+              <ion-icon name="refresh-outline" slot="start"></ion-icon>
+              Reordenar
+            </ion-button>
+            <ion-button size="small" fill="outline" color="medium" (click)="getHelp(order)">
+              <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+              Ayuda
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </ion-list>
+
+    <!-- Carrito actual -->
+    <ion-list class="ion-margin-top" *ngIf="carrito?.items?.length">
+      <ion-list-header>
+        <ion-label>Productos en el carrito</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img [src]="carrito.restaurant?.cover || 'assets/img/1.jpg'" />
+        </ion-thumbnail>
+        <ion-label>
+          <h3>{{ carrito.restaurant?.name }}</h3>
+          <p>{{ carrito.restaurant?.address }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngFor="let item of carrito.items">
+        <ion-label>
+          <h4>{{ item.name }}</h4>
+          <p>$ {{ item.price }} x {{ item.quantity }}</p>
+        </ion-label>
+        <ion-text slot="end">
+          <strong>$ {{ item.price * item.quantity }}</strong>
+        </ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label><strong>Subtotal</strong></ion-label>
+        <ion-text slot="end">$ {{ carrito.totalPrice }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label><strong>Envío</strong></ion-label>
+        <ion-text slot="end">$ {{ carrito.deliveryCharge }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label><strong>Total</strong></ion-label>
+        <ion-text slot="end">$ {{ carrito.grandTotal }}</ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-button expand="block" color="success" routerLink="/tabs/cart">
+          Ir al carrito
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+</ion-content>
+
